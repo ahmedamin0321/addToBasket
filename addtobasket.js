@@ -1,6 +1,21 @@
 (function ($) {
-    $.fn.addToBasket = function () {
+    $.fn.addToBasket = function (options=null) {
         myTray=this;
+        myTray.attr({
+            multiple:'multiple',
+            size:15,
+            class:'form-control'
+        });
+        if(options!==null){
+            let dropdown=options.dropdown;
+            for(var i=1;i<=dropdown.items;i++){
+                var value="item"+i;
+                var text=dropdown.text;
+                if(dropdown.textIterator===true)
+                    text=text+i;
+                this.append("<option value='"+value+"'>"+text+"</option>");
+            }
+        }
         myBasket=("#basket");
         myTray.wrap('<div class="col-md-2 trayContainer"></div>');
 
@@ -16,12 +31,17 @@
         $(myTray).change(function(){
             var text=$(this).val();
             $(this).find(':selected').hide().removeAttr('selected');
-            $(myBasket).find("option[value='"+text+"']").show();
+            text.forEach(function(val){
+                $(myBasket).find("option[value='"+val+"']").show();
+            });
         });
         $(myBasket).change(function(){
             var text=$(this).val();
             $(this).find(':selected').hide().removeAttr('selected');
-            $(myTray).find("option[value='"+text+"']").show();
+            text.forEach(function(val){
+                $(myTray).find("option[value='"+val+"']").show();
+            });
+            
         });
     };
 }(jQuery));
