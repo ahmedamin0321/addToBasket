@@ -1,2 +1,2 @@
 # addToBasket
-A simple plugin that can be use to move items from one basket to another
+A simple jquery plugin that can be use to move items from one list to another
